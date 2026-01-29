@@ -1,9 +1,9 @@
 'use client'
 import React, { use } from 'react'
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import Button from '@/components/Button';
 import { useAuth } from '@/context/AuthContext';
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
 
 export default function Logout() {
     const { logout, currentUser } = useAuth()

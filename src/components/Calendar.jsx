@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
-import { baseRating, gradients } from '@/utils'
 import { Fugaz_One } from 'next/font/google'
+import { baseRating, gradients } from '@/utils'
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 

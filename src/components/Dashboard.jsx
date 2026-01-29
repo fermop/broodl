@@ -1,10 +1,10 @@
 'use client'
-import { Fugaz_One } from 'next/font/google';
 import React, { useEffect, useState } from 'react'
+import { Fugaz_One } from 'next/font/google';
+import { db } from '@/firebase';
+import { doc, setDoc } from 'firebase/firestore';
 import Calendar from '@/components/Calendar';
 import { useAuth } from '@/context/AuthContext';
-import { doc, setDoc } from 'firebase/firestore';
-import { db } from '@/firebase';
 import Login from "@/components/Login";
 import Loading from "@/components/Loading";
 
