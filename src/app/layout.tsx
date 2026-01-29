@@ -3,7 +3,6 @@ import { Fugaz_One, Geist, Geist_Mono, Open_Sans } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
 import { AuthProvider } from "@/context/AuthContext";
-import Head from "./head";
 import Logout from "@/components/Logout";
 
 const geistSans = Geist({
@@ -47,7 +46,9 @@ export default function RootLayout({
   )
   return (
     <html lang="en">
-      <Head/>
+      <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossOrigin="anonymous" referrerPolicy="no-referrer" />
+      </head>
       <AuthProvider>
         <body
           className={`w-full max-w-[62.5rem] mx-auto text-sm sm:text-base min-h-screen flex flex-col text-slate-800 ${opensans.className} antialiased`}
