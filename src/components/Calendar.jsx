@@ -1,7 +1,8 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import { baseRating, gradients } from '@/utils'
 import { Fugaz_One } from 'next/font/google'
+import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
@@ -11,26 +12,37 @@ const dayList = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday
 export default function Calendar(props) {
   const { demo, completeData } = props
   const now = new Date()
-  const currMonth = now.getMonth()
   
-  const [selectedMonthIndex, setSelectedMonthIndex] = useState(currMonth)
-  const [selectedYear, setSelectedYear] = useState(now.getFullYear())
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
+  const router = useRouter()
+
+  const currMonth = now.getMonth()
+  const currYear = now.getFullYear()
+  
+  const selectedMonthIndex = searchParams.get('month') ? Number(searchParams.get('month')) : currMonth
+  const selectedYear = searchParams.get('year') ? Number(searchParams.get('year')) : currYear
 
   const selectedMonth = monthsArr[selectedMonthIndex]
   const data = completeData?.[selectedYear]?.[selectedMonthIndex] || {}
 
   function handleIncrementMonth(val) {
     let newMonthIndex = selectedMonthIndex + val
+    let newYear = selectedYear
     
     if (newMonthIndex < 0) {
-      setSelectedYear(curr => curr - 1)
-      setSelectedMonthIndex(11) // December
+      newYear = selectedYear - 1
+      newMonthIndex = 11
     } else if (newMonthIndex > 11) {
-      setSelectedYear(curr => curr + 1)
-      setSelectedMonthIndex(0) // January
-    } else {
-      setSelectedMonthIndex(newMonthIndex)
+      newYear = selectedYear + 1
+      newMonthIndex = 0
     }
+
+    const params = new URLSearchParams(searchParams)
+    params.set('month', newMonthIndex.toString())
+    params.set('year', newYear.toString())
+    
+    router.push(`${pathname}?${params.toString()}`, { scroll: false })
   }
 
   const monthNow = new Date(selectedYear, selectedMonthIndex, 1)
