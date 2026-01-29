@@ -1,7 +1,7 @@
 'use client'
 import React, { useContext, useState, useEffect } from 'react'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
-import { auth, db } from '@/firebase'
+import { auth, db } from '@/lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
 
 const AuthContext = React.createContext()
