@@ -1,18 +1,25 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Fugaz_One } from 'next/font/google';
 import Button from '@/components/Button';
 import { useAuth } from '@/context/AuthContext';
+import { useRouter, useSearchParams } from 'next/navigation';
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
 export default function Login() {
   const [ email, setEmail ] = useState('')
   const [ password, setpPassword ] = useState('')
-  const [ isRegister, setIsRegister ] = useState(false)
+
   const [ authenticating, setAuthenticating ] = useState(false)
 
   const { signup, login } = useAuth()
+  const router = useRouter()
+
+  const searchParams = useSearchParams()
+  const mode = searchParams.get('mode')
+
+  const [ isRegister, setIsRegister ] = useState(mode === 'register')
 
   async function handleSubmit() {
     if (!email || !password || password.length < 6) {
@@ -28,6 +35,8 @@ export default function Login() {
         console.log('Logging in existing user')
         await login(email, password)
       }
+
+      router.push('/dashboard')
     } catch (err) {
       console.log(err.message)
     } finally {

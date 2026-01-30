@@ -5,9 +5,9 @@ import { db } from '@/lib/firebase';
 import { doc, setDoc } from 'firebase/firestore';
 import Calendar from '@/components/Calendar';
 import { useAuth } from '@/context/AuthContext';
-import Login from "@/components/Login";
 import Loading from "@/components/Loading";
 import { useStats } from '@/hooks/useStats';
+import { useRouter } from 'next/navigation';
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
@@ -15,6 +15,13 @@ export default function Dashboard() {
   const { currentUser, userDataObj, setUserDataObj, loading } = useAuth()
   const [data, setData] = useState({})
   const now = new Date()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (!loading && !currentUser) {
+      router.push('/')
+    }
+  }, [currentUser, loading, router])
 
   const stats = useStats(data)
 
@@ -73,11 +80,11 @@ export default function Dashboard() {
   }, [currentUser, userDataObj])
 
   if (loading) {
-      return <Loading />
+    return <Loading />
   }
 
   if (!currentUser) {
-    return <Login />
+      return null 
   }
 
   return (

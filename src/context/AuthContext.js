@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from 'react'
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth'
 import { auth, db } from '@/lib/firebase'
 import { doc, getDoc } from 'firebase/firestore'
+import { useRouter } from 'next/navigation'
 
 const AuthContext = React.createContext()
 
@@ -14,6 +15,7 @@ export function AuthProvider({ children }) {
     const [currentUser, setCurrentUser] = useState(null)
     const [userDataObj, setUserDataObj] = useState(null)
     const [loading, setLoading] = useState(true)
+    const router = useRouter()
 
     // Auth Handlers
     function signup(email, password) {
@@ -27,6 +29,7 @@ export function AuthProvider({ children }) {
     function logout() {
         setUserDataObj(null)
         setCurrentUser(null)
+        router.push('/login')
         return signOut(auth)
     }
 
@@ -39,8 +42,11 @@ export function AuthProvider({ children }) {
 
                 if (!user) {
                     console.log('No User Found')
+                    document.cookie = "broodl_session=; path=/; max-age=0; SameSite=Lax";
                     return 
                 }
+
+                document.cookie = "broodl_session=true; path=/; SameSite=Lax";
 
                 // If user exists, fetch data from firestore database
                 console.log('Fetching User Data')
