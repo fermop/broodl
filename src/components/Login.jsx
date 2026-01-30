@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import Input from '@/components/Input';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { FcGoogle } from "react-icons/fc";
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
@@ -15,7 +16,7 @@ export default function Login() {
   
   const [error, setError] = useState(null)
 
-  const { signup, login } = useAuth()
+  const { signup, login, googleLogin } = useAuth()
   const router = useRouter()
   const searchParams = useSearchParams()
   const mode = searchParams.get('mode')
@@ -24,6 +25,20 @@ export default function Login() {
   function handleUpdateForm(e, setter) {
     setter(e.target.value)
     if (error) setError(null)
+  }
+
+  async function handleGoogleSignin() {
+    setAuthenticating(true)
+    setError(null)
+    try {
+        await googleLogin()
+        router.push('/dashboard')
+    } catch (err) {
+        console.log(err.message)
+        setError('Failed to sign in with Google.')
+    } finally {
+        setAuthenticating(false)
+    }
   }
 
   async function handleSubmit() {
@@ -98,6 +113,21 @@ export default function Login() {
         }}
         className='text-indigo-600 underline cursor-pointer'>{isRegister ? 'Sign In' : 'Sign Up'}
       </button></p>
+
+      <div className='relative flex py-2 items-center'>
+            <div className='grow border-t border-gray-300'></div>
+            <span className='shrink-0 mx-4 text-gray-400 text-sm'>Or continue with</span>
+            <div className='grow border-t border-gray-300'></div>
+        </div>
+
+        <button 
+            onClick={handleGoogleSignin}
+            className='w-full max-w-[400px] mx-auto px-3 py-2 sm:py-3 border border-solid border-indigo-400 rounded-full outline-0 hover:bg-indigo-50 duration-200 flex items-center justify-center gap-3 font-medium text-slate-700 bg-white cursor-pointer'
+        >
+            <FcGoogle className="text-xl" />
+            Sign in with Google
+        </button>
+
     </div>
   )
 }
