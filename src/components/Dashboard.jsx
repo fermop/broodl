@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { Fugaz_One } from 'next/font/google';
 import { db } from '@/lib/firebase';
 import { doc, setDoc } from 'firebase/firestore';
@@ -108,8 +108,9 @@ export default function Dashboard() {
           )
         })}
       </div>
-
-      <Calendar completeData={data} handleSetMood={handleSetMood}/>
+      <Suspense fallback={<Loading />}>
+        <Calendar completeData={data} handleSetMood={handleSetMood}/>
+      </Suspense>
     </div>
   )
 }

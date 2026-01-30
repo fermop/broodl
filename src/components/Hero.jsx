@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Fugaz_One } from 'next/font/google';
 import Calendar from "@/components/Calendar";
 import CallToAction from "@/components/CallToAction";
+import Loading from '@/components/Loading';
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
@@ -14,7 +15,9 @@ export default function Hero() {
 
       <CallToAction />
       
-      <Calendar demo/>
+      <Suspense fallback={<Loading />}>
+        <Calendar demo/>
+      </Suspense>
     </div>
   )
 }
