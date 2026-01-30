@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { Fugaz_One } from 'next/font/google';
 import Button from '@/components/Button';
+import Input from '@/components/Input';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter, useSearchParams } from 'next/navigation';
 
@@ -48,12 +49,8 @@ export default function Login() {
     <div className='flex flex-col flex-1 justify-center items-center gap-4'>
       <h3 className={`text-4xl sm:text-5xl md:text-6xl ${fugaz.className}`}>{isRegister ? 'Register' : 'Log In'}</h3>
       <p>You're one step away!</p>
-      <input value={email} onChange={(e) => {
-        setEmail(e.target.value)
-      }} className='w-full max-w-[400px] mx-auto px-3 py-2 sm:py-3 border border-solid border-indigo-400 rounded-full outline-0 focus:border-indigo-600 hover:border-indigo-600 duration-200' type='email' placeholder='Email' />
-      <input value={password} onChange={(e) => {
-        setpPassword(e.target.value)
-      }} className='w-full max-w-[400px] mx-auto px-3 py-2 sm:py-3 border border-solid border-indigo-400 rounded-full outline-0 focus:border-indigo-600 hover:border-indigo-600 duration-200' type='password' placeholder='Password' />
+      <Input placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)} type='email' />
+      <Input placeholder='Password' value={password} onChange={(e) => setpPassword(e.target.value)} type='password' />
       <div className='max-w-[25rem] w-full mx-auto'>
         <Button clickHandler={handleSubmit} text={authenticating ? "Submiting" : "Submit"} full/>
       </div>

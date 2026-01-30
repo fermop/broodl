@@ -3,6 +3,7 @@ import React from 'react'
 import { baseRating, gradients } from '@/utils'
 import { Fugaz_One } from 'next/font/google'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
+import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
@@ -56,13 +57,13 @@ export default function Calendar(props) {
     <div className='flex flex-col gap-2'>
       <div className='grid grid-cols-5 gap-4'>
         <button onClick={() => handleIncrementMonth(-1)} className='mr-auto text-indigo-400 text-lg sm:text-xl duration-200 hover:opacity-60 cursor-pointer'>
-            <i className="fa-solid fa-circle-chevron-left"></i>
+          <FaCircleChevronLeft />
         </button>
         <p className={`text-center col-span-3 capitalize whitespace-nowrap textGradient ${fugaz.className}`}>
             {selectedMonth}, {selectedYear}
         </p>
         <button onClick={() => handleIncrementMonth(1)} className='ml-auto text-indigo-400 text-lg sm:text-xl duration-200 hover:opacity-60 cursor-pointer'>
-            <i className="fa-solid fa-circle-chevron-right"></i>
+          <FaCircleChevronRight />
         </button>
       </div>
 
