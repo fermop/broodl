@@ -8,6 +8,7 @@ import { useAuth } from '@/context/AuthContext';
 import Loading from "@/components/Loading";
 import { useStats } from '@/hooks/useStats';
 import { useRouter } from 'next/navigation';
+import { moods } from '@/utils';
 
 const fugaz = Fugaz_One({ subsets: ["latin"], weight: ['400'] });
 
@@ -64,14 +65,6 @@ export default function Dashboard() {
     }
   }
 
-  const moods = {
-    '&*@#$': '😭',
-    'Sad': '😢',
-    'Exist': '😶',
-    'Good': '😄',
-    'Elated': '😍'
-  }
-
   useEffect(() => {
     if (!currentUser || !userDataObj) {
       return
@@ -103,14 +96,14 @@ export default function Dashboard() {
         How do you <span className='textGradient'>feel</span> today?
       </h4>
       <div className='flex items-stretch flex-wrap gap-4'>
-        {Object.keys(moods).map((mood, moodIndex) => {
+        {Object.keys(moods).map((moodIndex) => {
+          const mood = moods[moodIndex]
           return (
             <button onClick={() => {
-              const currentMoodValue = moodIndex + 1
-              handleSetMood(currentMoodValue)
+              handleSetMood(Number(moodIndex))
             }} className={`p-4 px-5 rounded-2xl purpleShadow duration-200 bg-indigo-50 hover:bg-indigo-100 cursor-pointer text-center flex flex-col itemx-center gap-2 flex-1`} key={moodIndex}>
-              <p className='text-4xl sm:text-5xl md:text-6xl'>{moods[mood]}</p>
-              <p className={`text-indigo-500 text-xs sm:text-sm md:text-base ${fugaz.className}`}>{mood}</p>
+              <p className='text-4xl sm:text-5xl md:text-6xl'>{mood.emoji}</p>
+              <p className={`text-indigo-500 text-xs sm:text-sm md:text-base ${fugaz.className}`}>{mood.label}</p>
             </button>
           )
         })}

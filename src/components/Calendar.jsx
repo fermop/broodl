@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { baseRating, gradients } from '@/utils'
+import { baseRating, gradients, moods } from '@/utils'
 import { Fugaz_One } from 'next/font/google'
 import { useSearchParams, usePathname, useRouter } from 'next/navigation'
 import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
@@ -85,15 +85,22 @@ export default function Calendar(props) {
                 }
 
                 let color = 'white'
+                let dayEmoji = null
+
                 if (demo) {
-                    color = gradients.indigo[baseRating[dayIndex]]
+                    let val = baseRating[dayIndex]
+                    color = gradients.indigo[val]
+                    dayEmoji = moods[val]?.emoji
                 } else if (data && dayIndex in data) {
-                    color = gradients.indigo[data[dayIndex]]
+                    let val = data[dayIndex]
+                    color = gradients.indigo[val]
+                    dayEmoji = moods[val]?.emoji
                 }
 
                 return (
                   <div style={{ background: color }} className={`text-xs sm:text-sm border border-solid p-2 flex items-center gap-2 justify-between rounded-lg ${isToday ? 'border-indigo-400 font-bold' : 'border-indigo-100'} ${color === 'white' ? 'text-indigo-400' : 'text-white'}`} key={dayOfWeekIndex}>
                     <p>{dayIndex}</p>
+                    {dayEmoji && <p>{dayEmoji}</p>}
                   </div>
                 )
               })}
