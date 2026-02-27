@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "emulators": "firebase emulators:start"
+    "emulators": "firebase emulators:start",
+    "preinstall": "npx only-allow pnpm"
   },
   "dependencies": {
     "firebase": "^12.8.0",
@@ -25,5 +26,10 @@
     "eslint-config-next": "16.1.4",
     "tailwindcss": "^4",
     "typescript": "^5"
-  }
+  },
+  "engines": {
+  "npm": "please-use-pnpm",
+  "pnpm": ">=10.30.3"
+  },
+  "packageManager": "pnpm@10.30.3"
 }
